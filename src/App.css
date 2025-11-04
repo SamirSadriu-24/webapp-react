@@ -43,3 +43,48 @@
   justify-content: center;
 }
 
+.card{
+  display:flex;
+  align-items: center;
+  text-align: center;
+  width: 200px;
+  height: 200px;
+}
+
+.card-body{
+  width: 100%;
+}
+
+.card_single{
+  border:white 2px solid;
+  height: 600px;
+  width: 950px;
+  padding:20px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  img{
+    height: 300px;
+    width: 200px;
+  }
+  .card-body{
+    display:flex;
+    flex-direction: column;
+  }
+  
+  .movie_info{
+    display: flex;
+    align-items: center;
+  }
+
+  .info ul{
+    list-style-type:none;
+  }
+
+  .back{
+    align-self: center;
+    width: 700px;
+  }
+}
