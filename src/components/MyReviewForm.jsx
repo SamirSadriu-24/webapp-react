@@ -1,12 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 
-const MyReviewForm = ({ movieId }) => {
+const MyReviewForm = ({ movieId, onReviewAdded  }) => {
 
     const [open, setOpen] = useState(false);
     const [name, setName] = useState("");
     const [vote, setVote] = useState("");
     const [text, setText] = useState("");
+    const [message, setMessage] = useState("")
 
     const gestisciInvio = (e) => {
         e.preventDefault();
@@ -22,6 +23,7 @@ const MyReviewForm = ({ movieId }) => {
                 setName("");
                 setVote("");
                 setText("");
+                if (onReviewAdded) onReviewAdded();
             })
 
             .catch((error) => {
@@ -34,7 +36,7 @@ const MyReviewForm = ({ movieId }) => {
         <>
             <button className="btn btn-danger text-white" onClick={() => setOpen(!open)}> LASCIA LA TUA RECENSIONE</button>
             <form className={`collapse mt-2 ${open ? "show" : ""}`}
-                    onSubmit={gestisciInvio}>
+                onSubmit={gestisciInvio}>
                 <input
                     className="form-control mb-2"
                     type="text"

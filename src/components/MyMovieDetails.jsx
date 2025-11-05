@@ -7,6 +7,8 @@ const MyMovieDetails = () => {
 
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
         axios.get(`http://127.0.0.1:3000/movies/${id}`)
@@ -14,7 +16,7 @@ const MyMovieDetails = () => {
                 setMovie(res.data[0] || res.data);
             })
             .catch(err => console.error(err));
-    }, [id]);
+    }, [id, refresh]);
 
     return (
         <div className="container min-vh-100 comparsa">
@@ -38,14 +40,16 @@ const MyMovieDetails = () => {
                                     <h5 className="text-danger">DESCRIZIONE</h5>
                                     <p className="card-text text-white">{movie?.abstract}</p>
                                 </li>
-                                <li className="mt-5">
-                                    <h5 className="text-danger">RECENSIONI</h5>
-                                    {movie?.reviews?.map((review, i) => (
-                                        <p className="fst-italic text-white" key={i}><span className="fw-bold fst-normal">{review.name}</span>: "{review.text}" <span className="text-white fw-bold pe-2 fst-normal">voto:</span><span className="fw-bold">{review.vote}<span /> <span className="text-danger">/5</span></span></p>
-                                    ))}
+                                <li className="mt-3">
+                                    <button className="btn btn-danger text-white mb-2" onClick={() => setOpen(!open)}>RECENSIONI</button>
+                                    <div className={`collapse mt-2 ${open ? "show" : ""}`}>
+                                        {movie?.reviews?.map((review, i) => (
+                                            <p className="fst-italic text-white" key={i}><span className="fw-bold fst-normal">{review.name}</span>: "{review.text}" <span className="text-white fw-bold pe-2 fst-normal">voto:</span><span className="fw-bold">{review.vote}<span /> <span className="text-danger">/5</span></span></p>
+                                        ))}
+                                    </div>
                                 </li>
                                 <li>
-                                    <MyReviewForm movieId={id}/>
+                                    <MyReviewForm movieId={id} onReviewAdded={() => setRefresh(prev => !prev)} />
                                 </li>
                             </ul>
                         </div>
